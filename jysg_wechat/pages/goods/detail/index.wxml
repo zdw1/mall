@@ -1,0 +1,22 @@
+<view class="detail-container">
+    <view class="swiper-container">
+        <swiper class="swiper-box" indicator-dots="{{ indicatorDots }}" vertical="{{ vertical }}" autoplay="{{ autoplay }}" interval="{{ interval }}" duration="{{ duration }}" bindchange="swiperchange">
+            <block wx:for="{{ goodsitem.images }}" wx:key="unique" wx:for-item="item">
+                <swiper-item>
+                    <image src="{{path}}{{item.imageUrl }}" class="slide-image" bindtap="previewImage" />
+                </swiper-item>
+            </block>
+        </swiper>
+        <view class="swiper-pager">{{ current + 1 }} / {{ goodsitem.images.length }}</view>
+    </view>
+    <view class="shopping-container">
+        <view class="name">{{ goodsitem.name }}</view>
+        <view class="price">¥ {{ goodsitem.price }}</view>
+        <text class="content">{{ goodsitem.content }}</text>
+        <view class="num">库存：{{ goodsitem.num }}</view>
+    </view>
+    <view class="btn-plus" bindtap="addCart">
+        <image class="icon" src="../../../assets/images/iconfont-plus-circle.png" />
+        <text>加入购物车</text>
+    </view>
+</view>

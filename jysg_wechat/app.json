@@ -1,0 +1,61 @@
+{
+  "pages":[
+    "pages/index/start/start",
+    "pages/index/login/login",
+    "pages/index/index/index",
+    "pages/classify/index/index",
+    "pages/goods/detail/index",
+    "pages/cart/index/index",
+    "pages/user/index/index",
+    "pages/user/address/list/list",
+    "pages/user/address/add/add",
+    "pages/user/address/edit/edit",
+    "pages/user/help/list/list",
+    "pages/user/help/detail/detail",
+    "pages/user/about/index/index",
+    "pages/order/confirm/confirm",
+    "pages/order/detail/detail",
+    "pages/order/list/list",
+    "pages/order/address/address"
+  ],
+  "window":{
+    "navigationBarBackgroundColor": "#479de6",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "小商城",
+    "backgroundColor": "#f8f8f8",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#479de6",
+    "borderStyle": "white",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index/index",
+        "iconPath": "assets/images/iconfont-home.png",
+        "selectedIconPath": "assets/images/iconfont-home-active.png",
+        "text": "主页"
+      },
+      {
+        "pagePath": "pages/classify/index/index",
+        "iconPath": "assets/images/iconfont-list.png",
+        "selectedIconPath": "assets/images/iconfont-list-active.png",
+        "text": "分类"
+      },
+      {
+        "pagePath": "pages/cart/index/index",
+        "iconPath": "assets/images/iconfont-cart.png",
+        "selectedIconPath": "assets/images/iconfont-cart-active.png",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/user/index/index",
+        "iconPath": "assets/images/iconfont-user.png",
+        "selectedIconPath": "assets/images/iconfont-user-active.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

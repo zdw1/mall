@@ -1,0 +1,47 @@
+<import src="../../../components/prompt.wxml"/>
+
+<template is="prompt" data="{{ prompt , item }}"/>
+
+<view class="weui-panel weui-panel_access" wx:if="{{ !!carts.items.length }}" wx:for="{{ carts.items }}" wx:key="unique">
+    <!-- <view class="weui-panel__hd">
+        <text class="info-meta" wx:if="{{ !canEdit }}" data-value="edit" bindtap="onTapEdit">编辑</text>
+        <text class="info-meta" wx:if="{{ canEdit }}" bindtap="onTapEdit">完成</text>
+        <text class="info-meta" bindtap="del" data-id="{{ item.cartid }}">删除</text>
+    </view> -->
+    <view class="weui-panel__bd" style="display: flex">
+        <icon class="select-icon" wx:if="{{item.select}}" type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}"></icon>
+        <icon class="select-icon" wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}"></icon>
+        <view class="weui-media-box weui-media-box_appmsg" style="width: 100%" hover-class="weui-cell_active">
+            <view class="weui-media-box__hd weui-media-box__hd_in-appmsg" bindtap="goToDetail" data-id="{{ item.goods.goodsId }}">
+                <image class="weui-media-box__thumb" src="{{path}}{{ item.goods.image }}" />
+            </view>
+            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                <view class="weui-media-box__title">{{ item.goods.name }}</view>
+                <view class="weui-media-box__desc">
+                    <text style="font-size:12px">{{item.goods.content}}</text>
+                </view>
+                <view class="weui-media-box__info" style="display:flex">
+                    <view class="text-orangered" style="flex:1">¥ {{ item.goods.price }}</view>
+                    <view class="customize-qua" style="flex:1">
+                        <view class="quantity-decrease" bindtap="decrease" data-id="{{ index }}" data-num="{{ item.cart.num }}"></view>
+                        <input class="quantity" type="number" data-id="{{ index }}" value="{{ item.cart.num }}" bindinput="bindKeyInput" />
+                        <view class="quantity-increase" bindtap="increase" data-id="{{ index }}" data-num="{{ item.cart.num }}"></view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+
+<view class="button-sp-area carts-foot" wx:if="{{ !!carts.items.length }}">
+    <view bindtap="bindSelectAll" style="margin-top:5px;">
+        <icon wx:if="{{selectAllFlag}}" type="success_circle" size="20"></icon>
+        <icon wx:else type="circle" size="20"></icon>
+        <text>全选</text>
+    </view>
+    <view class="heji">
+        <text>合计：</text>
+        <text class="text-orangered" style="letter-spacing: 0px;">¥ {{total}}</text>
+    </view>
+    <button class="weui-btn btn" type="primary" bindtap="confirmOrder" style="width:100px;">去结算</button>
+</view>

@@ -1,0 +1,11 @@
+<import src="../../../../components/prompt.wxml"/>
+
+<view class="scroll-list">
+	<view class="weui-cells" wx:if="{{ !!helps.length }}">
+	    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:for="{{ helps }}" wx:key="unique" bindtap="navigateTo" data-id="{{ item.id }}">
+	        <view class="weui-cell__bd">{{ item.title }}</view>
+	        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+	    </view>
+	</view>
+    <template is="prompt" data="{{ prompt }}"/>
+</view>

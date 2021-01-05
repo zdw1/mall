@@ -1,0 +1,38 @@
+<view class="address">
+    <view class="weui-panel">
+        <view class="weui-panel__bd">
+            <view class="weui-media-box weui-media-box_text">
+                <view class="weui-media-box__title weui-media-box__title_in-text">{{ address.item.name }} {{ address.item.phone }}</view>
+                <view class="weui-media-box__desc">{{ address.item.address }}</view>
+                <view class="addr">
+                    <image class="icon" src="../../../assets/images/iconfont-addr-default.png" />
+                </view>
+                <view class="weui-cell__ft weui-cell__ft_in-access" bindtap="redirectTo" data-item="{{address.item}}"></view>
+            </view>
+        </view>
+    </view>
+</view>
+
+<view class="weui-form-preview">
+    <view class="weui-form-preview__hd">
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">订单总价</view>
+            <view class="weui-form-preview__value_in-hd" style="color:red">¥ {{ carts.totalAmount }}</view>
+        </view>
+    </view>
+    <view class="weui-form-preview__bd">
+        <view class="weui-form-preview__item" wx:for="{{ carts.items }}" wx:key="unique">
+            <view class="weui-form-preview__label">{{ item.goods.name }}</view>
+            <view class="weui-form-preview__value">
+                <text>{{ item.goods.price }}x{{ item.cart.num }}=</text>
+                <text style="color:red"> ¥ {{ item.goods.price * item.cart.num }}</text>
+            </view>
+        </view>
+    </view>
+    <view class="weui-form-preview__msg">
+        <textarea name="buyerMsg" value="{{ buyerMsg }}" class="buyerMsg" placeholder="给卖家留言：" bindinput="inputMsg"></textarea>
+    </view>
+    <view class="weui-form-preview__ft">
+        <button class="weui-btn" type="primary" bindtap="addOrder">提交订单</button>
+    </view>
+</view>

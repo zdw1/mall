@@ -1,0 +1,94 @@
+<!--导航条-->
+<view class="navbar">
+  <lable wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">
+    <text>{{item}}</text>
+  </lable>
+</view>
+<!--全部-->
+<view class='total' style='background-color: #EBEBEB;'>
+  <view wx:if="{{list.length>0}}">
+    <!-- 外层 -->
+    <view class='cont_count' wx:for="{{list}}" wx:key="key">
+      <!-- 编号 -->
+      <view class='seria'>
+        <label class='seriac_name'>
+          订单编号
+          <text>{{item.orderid}}</text>
+        </label>
+        <!-- 订单状态 -->
+        <label class='seriac_status' wx:if="{{item.status == '1'}}">待付款</label>
+        <label class='seriac_status' wx:elif="{{item.status == '2'}}">待发货</label>
+        <label class='seriac_status' wx:elif="{{item.status == '3'}}">已发货</label>
+        <!-- <label class='seriac_status' wx:elif="{{item.status == '4'}}">已收货</label> -->
+        <label class='seriac_status' wx:elif="{{item.status == '5'}}">交易完成</label>
+      </view>
+      <!-- 列表 -->
+      <view class='list' wx:for="{{item.items}}" wx:for-item="arr_item" wx:key="key">
+        <!-- 列表图片 -->
+        <image class='list_img' src='{{path}}{{arr_item.goodsImage}}'></image>
+        <!-- 列表标题 -->
+        <label class='list_name'>
+          {{arr_item.goodsName}}
+        </label>
+        <!-- 列表价格 -->
+        <label class='list_money'>￥{{arr_item.totalFee}}</label>
+      </view>
+      <!-- 计算 -->
+      <view class='count_eg'>
+        <!-- 居中 -->
+        <view class='count_cent'>
+          <!-- 共两件商品 -->
+          <label class='cont_cent_name'>
+            共{{item.cont_count}}件商品
+          </label>
+          <!-- 合计 -->
+          <lable class='cont_cen_money'>
+            <text class='cont_ce_mon'>合计:￥{{item.payment}}</text>
+          </lable>
+        </view>
+      </view>
+      <!-- 标签功能 -->
+      <view class='coent_list' wx:if="{{item.status != '5'}}">
+        <!-- 取消订单 -->
+        <label class='coent_del' data-index='{{index}}' bindtap="cancel">取消订单</label>
+        <!-- 确认收货 -->
+        <label class='coent_log_base'  data-index='{{index}}' bindtap="comfirm">确认收货</label>
+      </view>
+      <view class='coent_list' wx:else>
+        <label class='coent_log_base'  data-index='{{index}}' bindtap="buyAgain">再来一单</label>
+      </view>
+    </view>
+  </view>
+  <!-- 否则 -->
+  <view wx:else>
+    <!-- 外层 -->
+    <view class='cont_count'>
+ 
+      <label class='none_tab' wx:if="{{currentTab==0}}">亲,您还暂未下单哦~~</label>
+      <label class='none_tab' wx:elif="{{currentTab==1}}">亲,您还没有待付款的定单哦~~</label>
+      <label class='none_tab' wx:elif="{{currentTab==2}}">亲,您还没有待发货的定单哦~~</label>
+      <label class='none_tab' wx:elif="{{currentTab==3}}">亲,您还没有待收货的定单哦~~</label>
+      <label class='none_tab' wx:elif="{{currentTab==1}}">亲,您还没有已完成的定单哦~~</label>
+    </view>
+  </view>
+ 
+</view>
+ 
+<!-- 代付款 -->
+<!-- <view hidden="{{currentTab!==1}}"> -->
+ 
+ 
+<!-- </view> -->
+<!-- 代发货 -->
+<!-- <view hidden="{{currentTab!==2}}">
+ 
+</view> -->
+<!-- 待收货 -->
+<!-- <view hidden="{{currentTab!==3}}">
+ 
+</view> -->
+<!-- 已完成 -->
+<!-- <view hidden="{{currentTab!==4}}">
+ 
+ 
+</view> -->
