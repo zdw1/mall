@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jysg.mall.dao.OrderDao">
+    <resultMap id="orderMap" type="com.jysg.mall.entity.OrderEntity">
+        <result column="orderid" property="orderid" />
+        <result column="openid" property="openid" />
+        <result column="payment" property="payment" />
+        <result column="postFee" property="postFee" />
+        <result column="status" property="status" />
+        <result column="payTime" property="payTime" />
+        <result column="postTime" property="postTime" />
+        <result column="createTime" property="createTime" />
+        <result column="updateTime" property="updateTime" />
+        <result column="endTime" property="endTime" />
+        <result column="closeTime" property="closeTime" />
+        <result column="shippingName" property="shippingName" />
+        <result column="shippingCode" property="shippingCode" />
+        <result column="buyerMsg" property="buyerMsg" />
+        <result column="buyerNick" property="buyerNick" />
+        <result column="buyerRate" property="buyerRate" />
+        <result column="buyerName" property="buyerName" />
+        <result column="buyerPhone" property="buyerPhone" />
+        <result column="buyerAddress" property="buyerAddress" />
+    </resultMap>
+    <resultMap id="orderItemMap" type="com.jysg.mall.entity.OrderItem">
+        <id column="id" property="id" />
+        <result column="orderid" property="orderid" />
+        <result column="cartid" property="cartid" />
+        <result column="goodsId" property="goodsId" />
+        <result column="goodsName" property="goodsName" />
+        <result column="num" property="num" />
+        <result column="price" property="price" />
+        <result column="totalFee" property="totalFee" />
+        <result column="goodsImage" property="goodsImage" />
+        <result column="createTime" property="createTime" />
+        <result column="updateTime" property="updateTime" />
+    </resultMap>
+    <!-- 通过orderid查询订单信息 -->
+    <select id="getOrderByOrderid" parameterType="string" resultMap="orderMap">
+        select * from m_order where orderid = #{orderid}
+    </select>
+    <!-- 通过orderid查询订单信息 -->
+    <select id="getOrderByOpenid" parameterType="string" resultMap="orderMap">
+        select * from m_order where openid = #{openid}
+        <if test="status != '' and status != null">
+            and status = #{status}
+        </if>
+            order by createTime desc
+    </select>
+    <!-- 通过orderid查询订单详细信息 -->
+    <select id="getOrderItem" resultMap="orderItemMap">
+        select * from m_order_item where orderid = #{orderid}
+    </select>
+    <!-- 新增订单信息 -->
+    <insert id="insertOrder">
+        insert into m_order (orderid, openid, payment, postFee, status, payTime, postTime, createTime, updateTime, endTime,
+            closeTime, shippingName, shippingCode, buyerMsg, buyerNick, buyerRate, buyerName, buyerPhone, buyerAddress)
+        values 
+        (#{orderEntity.orderid}, #{orderEntity.openid}, #{orderEntity.payment},
+            #{orderEntity.postFee}, #{orderEntity.status}, #{orderEntity.payTime},
+            #{orderEntity.postTime}, #{orderEntity.createTime}, #{orderEntity.updateTime},
+            #{orderEntity.endTime}, #{orderEntity.closeTime}, #{orderEntity.shippingName},
+            #{orderEntity.shippingCode}, #{orderEntity.buyerMsg}, #{orderEntity.buyerNick},
+            #{orderEntity.buyerRate}, #{orderEntity.buyerName},
+            #{orderEntity.buyerPhone}, #{orderEntity.buyerAddress}
+        )
+    </insert>
+
+    <!-- 新增订单详细信息 -->
+    <insert id="insertOrderItem">
+        insert into m_order_item (orderid, cartid, goodsId, goodsName, num, price, totalFee, goodsImage, createTime, updateTime)
+        values
+            (
+                #{orderItem.orderid}, #{orderItem.cartid}, #{orderItem.goodsId}, #{orderItem.goodsName},
+                #{orderItem.num}, #{orderItem.price}, #{orderItem.totalFee},
+                #{orderItem.goodsImage}, #{orderItem.createTime}, #{orderItem.updateTime}
+            )
+    </insert>
+
+    <!-- 删除订单表信息 -->
+    <delete id="deleteOrder" parameterType="string">
+        delete from m_order where orderid = #{orderid}
+    </delete>
+    <!-- 删除订单详细表信息 -->
+    <delete id="deleteOrderItem" parameterType="string">
+        delete from m_order_item where orderid = #{orderid}
+    </delete>
+
+    <!-- 修改订单状态 -->
+    <update id="updateOrderStatus">
+        update m_order set status = #{status} where orderid = #{orderid}
+    </update>
+
+
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jysg.mall.dao.HelpDao">
+    <resultMap id="helpMap" type="com.jysg.mall.entity.HelpEntity">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="content" property="content" />
+        <result column="sequence" property="sequence" />
+        <result column="createTime" property="createTime" />
+        <result column="updateTime" property="updateTime" />
+    </resultMap>
+    <!-- 通过id查询m_help信息 -->
+    <select id="getHelpById" parameterType="int" resultMap="helpMap">
+        select * from m_help where id = #{id}
+    </select>
+
+    <select id="getHelpList" resultMap="helpMap">
+        select * from m_help order by sequence
+    </select>
+</mapper>

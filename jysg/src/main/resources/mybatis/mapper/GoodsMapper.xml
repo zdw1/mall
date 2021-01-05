@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jysg.mall.dao.GoodsDao">
+    <resultMap id="goodsMap" type="com.jysg.mall.entity.GoodsEntity">
+        <id column="goodsId" property="goodsId" />
+        <result column="name" property="name" />
+        <result column="classifyId" property="classifyId" />
+        <result column="classifyName" property="classifyName" />
+        <result column="price" property="price" />
+        <result column="content" property="content" />
+        <result column="image" property="image" />
+        <result column="num" property="num" />
+        <result column="createTime" property="createTime" />
+        <result column="updateTime" property="updateTime" />
+    </resultMap>
+    <!-- 通过goodsId查询商品信息 -->
+    <select id="getGoodsByGoodsId" parameterType="int" resultMap="goodsMap">
+        select * from m_goods where goodsId = #{goodsId}
+    </select>
+    <!-- 新增商品分类 -->
+    <insert id="insertGoods">
+        insert into m_goods (goodsId, name, classifyId, classifyName, price, content, image, num, createTime, updateTime)
+        values
+        (#{goodsEntity.goodsId}, #{goodsEntity.name}, #{goodsEntity.classifyId}, #{goodsEntity.classifyName}, #{goodsEntity.price},
+            #{goodsEntity.content}, #{goodsEntity.image}, #{goodsEntity.num}, #{goodsEntity.createTime}, #{goodsEntity.updateTime})
+    </insert>
+    <!-- 更新商品分类 -->
+    <update id="updateGoods">
+        update m_goods set
+        name = #{goodsEntity.name},
+        classifyId = #{goodsEntity.classifyId},
+        classifyName = #{goodsEntity.classifyName},
+        price = #{goodsEntity.price},
+        content = #{goodsEntity.content},
+        image = #{goodsEntity.image},
+        num = #{goodsEntity.num},
+        createTime = #{goodsEntity.createTime},
+        updateTime = #{goodsEntity.updateTime}
+        <where>
+            goodsId = #{goodsEntity.goodsId}
+        </where>
+
+    </update>
+    <!-- 获取商品总数 -->
+    <select id="getGoodsSize" resultType="integer">
+        <![CDATA[select count(*) from m_goods]]>
+    </select>
+    <!-- 获取商品分类表列表 -->
+    <select id="getGoodsList" resultMap="goodsMap">
+        select * from m_goods order by goodsId asc
+        <if test="request.pageSize != null and request.start != null">
+            limit #{request.start}, #{request.pageSize}
+        </if>
+    </select>
+    <!-- 获取商品列表2 -->
+    <select id="getGoodsListByClassifyId" resultMap="goodsMap">
+        select * from m_goods
+        <where>
+            classifyId = #{request.classifyId}
+        </where>
+        order by goodsId asc
+        <if test="request.pageSize != null and request.start != null">
+            limit #{request.start}, #{request.pageSize}
+        </if>
+    </select>
+
+    <resultMap id="imagesMap" type="com.jysg.mall.entity.GoodsImages">
+        <result column="goodsId" property="goodsId" />
+        <result column="name" property="name" />
+        <result column="imageUrl" property="imageUrl" />
+    </resultMap>
+    <select id="getGoodsImagesByGoodsId" resultMap="imagesMap">
+        select * from m_goods_images where goodsId = #{goodsId}
+    </select>
+</mapper>

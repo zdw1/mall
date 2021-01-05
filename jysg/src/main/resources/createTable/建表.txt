@@ -1,0 +1,14 @@
+
+
+CREATE TABLE `NewTable` (
+`id`  int(5) NOT NULL AUTO_INCREMENT COMMENT '分类id' ,
+`name`  varchar(255) NOT NULL COMMENT '分类名称' ,
+`content`  varchar(255) NULL COMMENT '商品分类简介' ,
+`createTime`  varchar(255) NOT NULL COMMENT '分类创建时间' ,
+`updateTime`  varchar(255) NULL COMMENT '分类修改时间' ,
+PRIMARY KEY (`id`)
+)
+;
+
+
+

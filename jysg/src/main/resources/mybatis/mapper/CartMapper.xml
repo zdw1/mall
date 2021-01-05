@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jysg.mall.dao.CartDao">
+    <resultMap id="cartMap" type="com.jysg.mall.entity.CartEntity">
+        <id column="cartid" property="cartid" />
+        <result column="openid" property="openid" />
+        <result column="goodsId" property="goodsId" />
+        <result column="goodsName" property="goodsName" />
+        <result column="num" property="num" />
+        <result column="price" property="price" />
+        <result column="image" property="image" />
+        <result column="status" property="status" />
+        <result column="createTime" property="createTime" />
+        <result column="updateTime" property="updateTime" />
+    </resultMap>
+    <!-- 通过Cartid查询购物车信息 -->
+    <select id="getCartByCartId" parameterType="int" resultMap="cartMap">
+        select * from m_cart where cartid = #{cartid}
+    </select>
+    <!-- 通过Cartid和status查询购物车信息 -->
+    <select id="getCartByCartIdAndStatus" parameterType="int" resultMap="cartMap">
+        select * from m_cart where cartid = #{cartid}
+        <if test="status != null">
+            and status = #{status}
+        </if>
+    </select>
+    <!-- 新增购物车 -->
+    <insert id="insertCart">
+        insert into m_cart (openid, goodsId, goodsName, num, price, image, status, createTime, updateTime)
+        values
+        (#{cartEntity.openid}, #{cartEntity.goodsId}, #{cartEntity.goodsName}, #{cartEntity.num}, #{cartEntity.price},
+         #{cartEntity.image}, #{cartEntity.status}, #{cartEntity.createTime}, #{cartEntity.updateTime})
+    </insert>
+    <!-- 更改购物车 -->
+    <update id="updateCart">
+        update m_cart set
+        openid = #{cartEntity.openid},
+        goodsId = #{cartEntity.goodsId},
+        goodsName = #{cartEntity.goodsName},
+        num = #{cartEntity.num},
+        price = #{cartEntity.price},
+        image = #{cartEntity.image},
+        status = #{cartEntity.status},
+        createTime = #{cartEntity.createTime},
+        updateTime = #{cartEntity.updateTime}
+        <where>
+            cartid = #{cartEntity.cartid}
+        </where>
+
+    </update>
+    <!-- 通过openid查询购物车信息 -->
+    <select id="getCartList" parameterType="string" resultMap="cartMap">
+        select * from m_cart where openid = #{openid}
+    </select>
+    <!-- 通过openid和status查询购物车信息 -->
+    <select id="getCartList2" resultMap="cartMap">
+        select * from m_cart where openid = #{openid}
+        <if test="status != null">
+            and status = #{status}
+        </if>
+    </select>
+    <!-- 通过openid/goodsId查询购物车商品信息 -->
+    <select id="getCartByOpenIdAndGoodsId" resultMap="cartMap">
+        select * from m_cart where openid = #{openid}
+        <if test="goodsId != null">
+            and goodsId = #{goodsId}
+        </if>
+    </select>
+    <!-- deleteCartByCartId -->
+    <delete id="deleteCartByCartId">
+        delete from m_cart where cartid = #{cartid}
+    </delete>
+</mapper>

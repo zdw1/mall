@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jysg.mall.dao.UserDao">
+    <resultMap id="userMap" type="com.jysg.mall.entity.UserEntity">
+        <id column="id" property="id" />
+        <result column="openid" property="openid" />
+        <result column="name" property="name" />
+        <result column="phone" property="phone" />
+        <result column="address" property="address" />
+        <result column="nickname" property="nickName" />
+        <result column="headimage" property="headImage" />
+        <result column="unionid" property="unionid" />
+        <result column="session_key" property="session_key" />
+    </resultMap>
+    <!-- 通过openid查询用户信息 -->
+    <select id="getUserEntityByOpenid" resultMap="userMap" parameterType="string">
+        select * from m_user where openid = #{openid}
+    </select>
+    <!-- 新建用户信息 -->
+    <insert id="insertUser">
+		insert into m_user (openid,name,phone,address,nickname,headimage,unionid,session_key)
+		values
+		(#{userEntity.openid},#{userEntity.name},#{userEntity.phone},#{userEntity.address},#{userEntity.nickName},
+		    #{userEntity.headImage},#{userEntity.unionid},#{userEntity.session_key})
+	</insert>
+    <!-- 更新用户信息 -->
+    <update id="updateUser">
+        update m_user set
+        name = #{userEntity.name},
+        phone = #{userEntity.phone},
+        address = #{userEntity.address},
+        nickname = #{userEntity.nickName},
+        headimage = #{userEntity.headImage},
+        unionid = #{userEntity.unionid},
+        session_key = #{userEntity.session_key}
+        <where>
+            openid = #{userEntity.openid}
+        </where>
+    </update>
+
+    <resultMap id="userAddress" type="com.jysg.mall.entity.UserAddress">
+        <id column="id" property="id"/>
+        <result column="openid" property="openid" />
+        <result column="name" property="name" />
+        <result column="phone" property="phone" />
+        <result column="address" property="address" />
+        <result column="status" property="status" />
+        <result column="createTime" property="createTime" />
+        <result column="updateTime" property="updateTime" />
+    </resultMap>
+    <!-- 通过地址id查询用户地址信息 -->
+    <select id="getUserAddressById" parameterType="int" resultMap="userAddress">
+        select * from m_user_address where id = #{id}
+    </select>
+    <!-- 查询默认的地址 -->
+    <select id="getUserAddressDefault" resultMap="userAddress">
+        select * from m_user_address where openid = #{openid} and status = #{status}
+    </select>
+    <!-- 新增用户收货地址 -->
+    <insert id="insertUserAddress">
+        insert into m_user_address (openid, name, phone, address, status, createTime, updateTime)
+        values
+        (#{userAddress.openid}, #{userAddress.name}, #{userAddress.phone}, #{userAddress.address},
+            #{userAddress.status}, #{userAddress.createTime}, #{userAddress.updateTime})
+    </insert>
+    <!-- 修改用户收货地址 -->
+    <update id="updateUserAddress">
+        update m_user_address set
+        openid = #{userAddress.openid}, name = #{userAddress.name},
+        phone = #{userAddress.phone}, address = #{userAddress.address},
+        status = #{userAddress.status}, createTime = #{userAddress.createTime},
+        updateTime = #{userAddress.updateTime}
+        <where>
+            id = #{userAddress.id}
+        </where>
+    </update>
+    <!-- 通过openid查询用户所有地址信息 -->
+    <select id="getUserAddressList" resultMap="userAddress">
+        select * from m_user_address where openid =#{openid}
+    </select>
+    <!-- 通过id删除用户地址信息 -->
+    <delete id="deleteUserAddressById" parameterType="int">
+        delete from m_user_address where id = #{id}
+    </delete>
+</mapper>

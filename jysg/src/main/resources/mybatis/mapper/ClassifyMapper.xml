@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jysg.mall.dao.ClassifyDao">
+    <resultMap id="classifyMap" type="com.jysg.mall.entity.ClassifyEntity">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="content" property="content" />
+        <result column="createTime" property="createTime" />
+        <result column="updateTime" property="updateTime" />
+    </resultMap>
+    <!-- 通过id查询商品分类 -->
+    <select id="getClassifyEntityById" parameterType="int" resultMap="classifyMap">
+        select * from m_classify where id = #{id}
+    </select>
+    <!-- 新增商品分类 -->
+    <insert id="insertClassifyEntity">
+        insert into m_classify (name, content, createTime, updateTime)
+        values
+        (#{classifyEntity.name}, #{classifyEntity.content}, #{classifyEntity.createTime}, #{classifyEntity.updateTime})
+    </insert>
+    <!-- 更新商品分类 -->
+    <update id="updateClassifyEntity">
+        update m_classify set
+        name = #{classifyEntity.name},
+        content = #{classifyEntity.content},
+        createTime = #{classifyEntity.createTime},
+        updateTime = #{classifyEntity.updateTime})
+        <where>
+            id = #{classifyEntity.id}
+        </where>
+
+    </update>
+    <!-- 获取商品分类表总数 -->
+    <select id="getClassifySize" resultType="integer">
+        <![CDATA[select count(*) from m_classify]]>
+    </select>
+    <!-- 获取商品分类表列表 -->
+    <select id="getClassifyList" resultMap="classifyMap">
+        select * from m_classify order by id asc
+        <if test="request != null">
+            limit #{request.start}, #{request.pageSize}
+        </if>
+    </select>
+
+</mapper>
